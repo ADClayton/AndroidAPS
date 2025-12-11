@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AndroidAPSMaui.Pages.MainPage"
+             Title="Glucose">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Blood Glucose" FontAttributes="Bold" FontSize="22" />
+            <GraphicsView x:Name="Graph" HeightRequest="320" />
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
+                <Label Text="Pump status:" Grid.Column="0" />
+                <Label Text="{Binding PumpStatus}" Grid.Column="1" />
+            </Grid>
+            <Button Text="Read data from the pump"
+                    Command="{Binding ReadPumpCommand}" />
+            <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                <ActivityIndicator IsRunning="{Binding IsReadingPump}" IsVisible="{Binding IsReadingPump}" />
+                <Label Text="Tap the button to request the latest delivery and status information from the running Dash pump session." />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

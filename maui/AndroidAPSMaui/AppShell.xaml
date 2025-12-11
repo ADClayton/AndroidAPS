@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AndroidAPSMaui.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:pages="clr-namespace:AndroidAPSMaui.Pages"
+    xmlns:local="clr-namespace:AndroidAPSMaui">
+    <TabBar>
+        <ShellContent Title="Glucose" ContentTemplate="{DataTemplate pages:MainPage}" Route="main" />
+        <ShellContent Title="Pump" ContentTemplate="{DataTemplate pages:PumpConnectionPage}" Route="pump-config" />
+    </TabBar>
+</Shell>
