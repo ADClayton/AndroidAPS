@@ -2,15 +2,20 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
   <Style TargetType="ContentPage">
-    <Setter Property="BackgroundColor" Value="{DynamicResource Light}" />
+    <Setter Property="BackgroundColor" Value="{DynamicResource Dark}" />
   </Style>
   <Style TargetType="Label">
-    <Setter Property="TextColor" Value="{DynamicResource Dark}" />
+    <Setter Property="TextColor" Value="{DynamicResource Light}" />
   </Style>
   <Style TargetType="Button">
     <Setter Property="BackgroundColor" Value="{DynamicResource Primary}" />
     <Setter Property="TextColor" Value="{DynamicResource Light}" />
     <Setter Property="CornerRadius" Value="8" />
     <Setter Property="Padding" Value="12,10" />
+  </Style>
+  <Style TargetType="Entry">
+    <Setter Property="TextColor" Value="{DynamicResource Light}" />
+    <Setter Property="PlaceholderColor" Value="{DynamicResource Tertiary}" />
+    <Setter Property="BackgroundColor" Value="#1A1A1A" />
   </Style>
 </ResourceDictionary>

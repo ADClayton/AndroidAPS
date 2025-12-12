@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-  <Color x:Key="Primary">#512BD4</Color>
-  <Color x:Key="Secondary">#2B0B98</Color>
-  <Color x:Key="Tertiary">#CBB2FF</Color>
-  <Color x:Key="Accent">#8A2BE2</Color>
+  <Color x:Key="Primary">#1E90FF</Color>
+  <Color x:Key="Secondary">#0D6EFD</Color>
+  <Color x:Key="Tertiary">#82CFFF</Color>
+  <Color x:Key="Accent">#F6BE00</Color>
   <Color x:Key="Light">#FFFFFF</Color>
-  <Color x:Key="Dark">#1B1B1B</Color>
-  <Color x:Key="GraphBackground">#0E0E11</Color>
+  <Color x:Key="Dark">#000000</Color>
+  <Color x:Key="GraphBackground">#000000</Color>
   <Color x:Key="PumpEvent">#FF6F61</Color>
-  <Color x:Key="GraphLine">#5DBB63</Color>
+  <Color x:Key="GraphLine">#7CFC00</Color>
 </ResourceDictionary>

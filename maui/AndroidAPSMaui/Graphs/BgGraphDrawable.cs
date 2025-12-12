@@ -16,7 +16,7 @@ public class BgGraphDrawable : IDrawable
     public void Draw(ICanvas canvas, RectF dirtyRect)
     {
         canvas.SaveState();
-        canvas.FillColor = Color.FromArgb("0E0E11");
+        canvas.FillColor = Colors.Black;
         canvas.FillRectangle(dirtyRect);
 
         if (_points.Count == 0)
@@ -67,7 +67,7 @@ public class BgGraphDrawable : IDrawable
     {
         var rangeSeconds = (maxTime - minTime).TotalSeconds;
         var valueRange = maxValue - minValue;
-        canvas.StrokeColor = Color.FromArgb("5DBB63");
+        canvas.StrokeColor = Color.FromArgb("7CFC00");
         canvas.StrokeSize = 3;
 
         PointF? previous = null;

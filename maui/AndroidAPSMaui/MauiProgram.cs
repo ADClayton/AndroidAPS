@@ -22,11 +22,15 @@ public static class MauiProgram
         builder.Services.AddSingleton<BgSmoothingService>();
         builder.Services.AddSingleton<XdripIngestionService>();
         builder.Services.AddSingleton<DashPumpService>();
+        builder.Services.AddSingleton<PermissionService>();
         builder.Services.AddSingleton<Graphs.BgGraphDrawable>();
         builder.Services.AddSingleton<GraphViewModel>();
         builder.Services.AddSingleton<PumpConnectionViewModel>();
 #if ANDROID
         builder.Services.AddSingleton<IDashPumpTransport, AndroidDashPumpTransport>();
+        builder.Services.AddSingleton<IBluetoothDeviceScanner, AndroidBluetoothDeviceScanner>();
+#else
+        builder.Services.AddSingleton<IBluetoothDeviceScanner, DefaultBluetoothDeviceScanner>();
 #endif
 
         builder.Services.AddTransient<Pages.MainPage>();

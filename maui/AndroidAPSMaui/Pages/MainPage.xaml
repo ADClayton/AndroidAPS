@@ -6,6 +6,13 @@
     <ScrollView>
         <VerticalStackLayout Padding="16" Spacing="12">
             <Label Text="Blood Glucose" FontAttributes="Bold" FontSize="22" />
+            <Frame BackgroundColor="{DynamicResource GraphBackground}" Padding="16" CornerRadius="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Current glucose" FontSize="14" />
+                    <Label Text="{Binding CurrentGlucose}" FontSize="48" FontAttributes="Bold" HorizontalOptions="Center" />
+                    <Label Text="{Binding GlucoseTimestamp}" FontSize="14" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
             <GraphicsView x:Name="Graph" HeightRequest="320" />
             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="6">
                 <Label Text="Pump status:" Grid.Column="0" />
