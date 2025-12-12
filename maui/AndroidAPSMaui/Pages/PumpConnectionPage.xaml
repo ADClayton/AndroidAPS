@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AndroidAPSMaui.Pages.PumpConnectionPage"
+             Title="Pump Connection">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+            <Label Text="Dash pump connection" FontSize="22" FontAttributes="Bold" />
+            <Label Text="Provide the pod Bluetooth address and identifier already in use by the primary AndroidAPS instance." />
+            <Entry Placeholder="AA:BB:CC:DD:EE:FF" Text="{Binding PodAddress}" />
+            <Entry Placeholder="Pod identifier" Text="{Binding PodIdentifier}" />
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+            <Label Text="Commands are executed silently; the UI intentionally avoids bolus or basal actions." />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
