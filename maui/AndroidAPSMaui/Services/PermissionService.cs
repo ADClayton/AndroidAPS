@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Microsoft.Maui.ApplicationModel;
-
 namespace AndroidAPSMaui.Services;
 
 public class PermissionService
@@ -11,7 +8,7 @@ public class PermissionService
         var required = new List<Permissions.BasePermission>
         {
             new Permissions.Bluetooth(),
-            new Permissions.BluetoothLe(),
+            //new Permissions.BluetoothLe(),
             new Permissions.LocationWhenInUse()
         };
 
