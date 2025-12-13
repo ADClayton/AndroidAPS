@@ -1,9 +1,12 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using AndroidAPSMaui.Data;
 using AndroidAPSMaui.Services;
+using Microsoft.Maui.Storage;
 
 namespace AndroidAPSMaui.ViewModels;
 
@@ -12,8 +15,11 @@ public class GraphViewModel : INotifyPropertyChanged
     private readonly BgReadingStore _bgReadingStore;
     private readonly PumpEventStore _eventStore;
     private readonly DashPumpService _pumpService;
+    private readonly PermissionService _permissionService;
     private bool _isReadingPump;
     private string _status = "Not connected";
+    private string _currentGlucose = "—";
+    private string _glucoseTimestamp = "Waiting for glucose data";
 
     public ObservableCollection<BgReading> Readings { get; } = new();
     public ObservableCollection<PumpEvent> PumpEvents { get; } = new();
@@ -32,13 +38,27 @@ public class GraphViewModel : INotifyPropertyChanged
         set => SetProperty(ref _isReadingPump, value);
     }
 
-    public GraphViewModel(BgReadingStore bgReadingStore, PumpEventStore eventStore, DashPumpService pumpService)
+    public string CurrentGlucose
+    {
+        get => _currentGlucose;
+        set => SetProperty(ref _currentGlucose, value);
+    }
+
+    public string GlucoseTimestamp
+    {
+        get => _glucoseTimestamp;
+        set => SetProperty(ref _glucoseTimestamp, value);
+    }
+
+    public GraphViewModel(BgReadingStore bgReadingStore, PumpEventStore eventStore, DashPumpService pumpService, PermissionService permissionService)
     {
         _bgReadingStore = bgReadingStore;
         _eventStore = eventStore;
         _pumpService = pumpService;
+        _permissionService = permissionService;
         ReadPumpCommand = new Command(async () => await ReadPumpAsync());
 
+        ConfigurePumpFromPreferences();
         _bgReadingStore.ReadingsChanged += (_, _) => RefreshReadings();
         _eventStore.EventsChanged += (_, _) => RefreshEvents();
 
@@ -54,6 +74,18 @@ public class GraphViewModel : INotifyPropertyChanged
             foreach (var reading in _bgReadingStore.Readings)
             {
                 Readings.Add(reading);
+            }
+
+            var latest = Readings.LastOrDefault();
+            if (latest != null)
+            {
+                CurrentGlucose = Math.Round(latest.Value).ToString();
+                GlucoseTimestamp = $"Updated {latest.Timestamp:t}";
+            }
+            else
+            {
+                CurrentGlucose = "—";
+                GlucoseTimestamp = "Waiting for glucose data";
             }
         });
     }
@@ -77,6 +109,19 @@ public class GraphViewModel : INotifyPropertyChanged
             return;
         }
 
+        if (!TryConfigureFromPreferences(out var configurationMessage))
+        {
+            PumpStatus = configurationMessage;
+            return;
+        }
+
+        var permissionsGranted = await _permissionService.EnsureBluetoothPermissionsAsync();
+        if (!permissionsGranted)
+        {
+            PumpStatus = "Bluetooth permissions are required.";
+            return;
+        }
+
         IsReadingPump = true;
         PumpStatus = "Reading pump…";
         try
@@ -92,6 +137,27 @@ public class GraphViewModel : INotifyPropertyChanged
         {
             IsReadingPump = false;
         }
+    }
+
+    private void ConfigurePumpFromPreferences()
+    {
+        TryConfigureFromPreferences(out _);
+    }
+
+    private bool TryConfigureFromPreferences(out string message)
+    {
+        var address = Preferences.Default.Get("dash_pod_address", string.Empty);
+        var identifier = Preferences.Default.Get("dash_pod_identifier", string.Empty);
+
+        if (string.IsNullOrWhiteSpace(address))
+        {
+            message = "Set the Dash pod Bluetooth address before reading.";
+            return false;
+        }
+
+        _pumpService.Configure(address, identifier);
+        message = string.Empty;
+        return true;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
