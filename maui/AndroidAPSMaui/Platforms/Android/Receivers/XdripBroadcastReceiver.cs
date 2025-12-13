@@ -4,7 +4,7 @@ using AndroidAPSMaui.Services;
 
 namespace AndroidAPSMaui.Platforms.Android.Receivers;
 
-[BroadcastReceiver(Enabled = true, Exported = true, Permission = "com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE")]
+[BroadcastReceiver(Enabled = true, Exported = true)]
 [IntentFilter(new[] { XdripIngestionService.ActionNewBgEstimate, XdripIngestionService.ActionBgEstimateNoData })]
 public class XdripBroadcastReceiver : BroadcastReceiver
 {
