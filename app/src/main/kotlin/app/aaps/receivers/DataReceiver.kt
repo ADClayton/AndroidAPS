@@ -34,10 +34,24 @@ open class DataReceiver : DaggerBroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
-        val bundle = intent.extras ?: return
-        aapsLogger.debug(LTag.CORE, "onReceive ${intent.action} ${BundleLogger.log(bundle)}")
+        val action = intent.action
+        val bundle = intent.extras
 
-        when (intent.action) {
+        if (action == null) {
+            aapsLogger.error(LTag.CORE, "DataReceiver.onReceive called without action. Verify the broadcast configuration and sender.")
+            logTriggeringAdvice(context)
+            return
+        }
+
+        if (bundle == null) {
+            aapsLogger.error(LTag.CORE, "DataReceiver.onReceive missing extras for action {}. Ensure the broadcaster includes payload data.", action)
+            logTriggeringAdvice(context)
+            return
+        }
+
+        aapsLogger.debug(LTag.CORE, "onReceive {} {}", action, BundleLogger.log(bundle))
+
+        val request = when (action) {
             Intents.ACTION_NEW_BG_ESTIMATE            ->
                 OneTimeWorkRequest.Builder(XdripSourcePlugin.XdripSourceWorker::class.java)
                     .setInputData(dataWorkerStorage.storeInputData(bundle, intent.action)).build()
@@ -93,12 +107,29 @@ open class DataReceiver : DaggerBroadcastReceiver() {
                 OneTimeWorkRequest.Builder(DexcomPlugin.DexcomWorker::class.java)
                     .setInputData(dataWorkerStorage.storeInputData(bundle, intent.action)).build()
 
-            else                                      -> null
-        }?.let { request -> dataWorkerStorage.enqueue(request) }
+            else                                      -> {
+                aapsLogger.warn(LTag.CORE, "DataReceiver.onReceive received unsupported action {}. Confirm the intent filter and sender match expected actions.", action)
+                logTriggeringAdvice(context)
+                null
+            }
+        }
+
+        if (request != null) {
+            dataWorkerStorage.enqueue(request)
+            aapsLogger.info(LTag.CORE, "DataReceiver scheduled worker {} for action {}", request.workSpec.workerClassName, action)
+        }
 
         // Verify KeepAlive is running
         // Sometimes the schedule fail
         KeepAliveWorker.scheduleIfNotRunning(context, aapsLogger, fabricPrivacy)
+    }
+
+    private fun logTriggeringAdvice(context: Context) {
+        aapsLogger.info(
+            LTag.CORE,
+            "Troubleshooting: if expected broadcasts do not trigger DataReceiver, verify the receiver entry in AndroidManifest.xml is enabled and has android:exported set appropriately, runtime permissions (for example RECEIVE_SMS) are granted, and any third-party sender uses the exact package {} and action names from Intents. Also confirm battery optimizations or vendor-specific power managers are not blocking background receivers.",
+            context.packageName
+        )
     }
 
 }
