@@ -1,3 +1,4 @@
+using Android.Content;
 using AndroidAPSMaui.Data;
 
 namespace AndroidAPSMaui.Services;
@@ -22,7 +23,7 @@ public class XdripIngestionService
     }
 
 #if ANDROID
-    public void HandleIntent(Android.Content.Intent? intent)
+    public void HandleIntent(Intent? intent)
     {
         if (intent == null)
         {

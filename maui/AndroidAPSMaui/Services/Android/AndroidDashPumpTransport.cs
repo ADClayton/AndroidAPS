@@ -1,7 +1,5 @@
 #if ANDROID
 using Android.Bluetooth;
-using Android.Content;
-using Android.OS;
 using Android.Runtime;
 using AndroidAPSMaui.Data;
 
@@ -91,7 +89,7 @@ public class AndroidDashPumpTransport : Java.Lang.Object, IDashPumpTransport
         _serviceDiscoveryTcs = new TaskCompletionSource<bool>();
         using var registration = cancellationToken.Register(() => _serviceDiscoveryTcs.TrySetCanceled());
         var callback = new GattCallback(this);
-        _gatt = device.ConnectGatt(Application.Context, false, callback);
+        _gatt = device.ConnectGatt(null, false, callback);
         await _serviceDiscoveryTcs.Task.ConfigureAwait(false);
     }
 

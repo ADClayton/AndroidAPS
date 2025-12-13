@@ -30,3 +30,7 @@ wear/pumpcontrol/*
 .kotlin/*
 /*.log
 *.preferences_pb
+
+/maui/AndroidAPSMaui/bin
+/maui/AndroidAPSMaui/obj
+/maui/AndroidAPSMaui/.vs
