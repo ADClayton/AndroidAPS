@@ -9,7 +9,7 @@ using AndroidAPSMaui.Logging;
 
 namespace AndroidAPSMaui.Platforms.Android.Receivers;
 
-[BroadcastReceiver(Enabled = true, Exported = true, DirectBootAware = true)]
+[BroadcastReceiver(Enabled = true, Exported = true, DirectBootAware = true, Permission = XdripIngestionService.PermissionReceiveBgEstimate)]
 [IntentFilter(new[] { XdripIngestionService.ActionNewBgEstimate, XdripIngestionService.ActionBgEstimateNoData })]
 public class XdripBroadcastReceiver : BroadcastReceiver
 {

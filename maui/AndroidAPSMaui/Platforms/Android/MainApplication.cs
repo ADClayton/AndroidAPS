@@ -3,6 +3,7 @@ using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Util;
+using AndroidAPSMaui.Platforms.Android.Receivers;
 using AndroidAPSMaui.Logging;
 using AndroidAPSMaui.Services;
 
@@ -50,6 +51,41 @@ public class MainApplication : MauiApplication
                     Log.Info(MauiLog.Tag,
                         $"Receiver entry: {activityInfo?.Name ?? "<unknown>"}, Enabled={activityInfo?.Enabled}, Exported={activityInfo?.Exported}, Permission={activityInfo?.Permission ?? "<none>"}.");
                 }
+            }
+
+            var permissionState = pm.CheckPermission(XdripIngestionService.PermissionReceiveBgEstimate, PackageName);
+            Log.Info(MauiLog.Tag,
+                $"DexDrip permission state for package {PackageName}: {permissionState} (0=granted). Ensure this is granted so permission-gated broadcasts can reach the receiver.");
+
+            var receiverComponent = new ComponentName(PackageName, typeof(XdripBroadcastReceiver).FullName!);
+            var enabledSetting = pm.GetComponentEnabledSetting(receiverComponent);
+            Log.Info(MauiLog.Tag,
+                $"ComponentEnabledSetting for {receiverComponent.ClassName}: {enabledSetting} (1=enabled, 2=disabled, default uses manifest).");
+
+            var implicitResolve = pm.ResolveBroadcast(new Intent(XdripIngestionService.ActionNewBgEstimate), PackageInfoFlags.MatchAll);
+            if (implicitResolve?.ActivityInfo != null)
+            {
+                Log.Info(MauiLog.Tag,
+                    $"ResolveBroadcast (implicit) returned {implicitResolve.ActivityInfo.Name} (Exported={implicitResolve.ActivityInfo.Exported}, Permission={implicitResolve.ActivityInfo.Permission ?? "<none>"}).");
+            }
+            else
+            {
+                Log.Warn(MauiLog.Tag,
+                    "ResolveBroadcast (implicit) returned no receiver. If xDrip sends implicit broadcasts, the filter may be missing or app disabled.");
+            }
+
+            var explicitIntent = new Intent(XdripIngestionService.ActionNewBgEstimate);
+            explicitIntent.SetComponent(receiverComponent);
+            var explicitResolve = pm.ResolveBroadcast(explicitIntent, PackageInfoFlags.MatchAll);
+            if (explicitResolve?.ActivityInfo != null)
+            {
+                Log.Info(MauiLog.Tag,
+                    $"ResolveBroadcast (explicit) returned {explicitResolve.ActivityInfo.Name} (Exported={explicitResolve.ActivityInfo.Exported}, Permission={explicitResolve.ActivityInfo.Permission ?? "<none>"}).");
+            }
+            else
+            {
+                Log.Warn(MauiLog.Tag,
+                    "ResolveBroadcast (explicit) returned no receiver. Ensure the component name matches the installed package (check logcat package name vs manifest).");
             }
         }
         catch (Exception ex)

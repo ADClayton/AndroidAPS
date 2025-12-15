@@ -11,6 +11,7 @@ public partial class XdripIngestionService
     public const string ExtraBgSlopeName = "com.eveningoutpost.dexdrip.Extras.BgSlopeName";
     public const string ExtraRaw = "com.eveningoutpost.dexdrip.Extras.Raw";
     public const string ExtraSource = "com.eveningoutpost.dexdrip.Extras.SourceInfo";
+    public const string PermissionReceiveBgEstimate = "com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE";
 
     private readonly BgReadingStore _bgReadingStore;
     private readonly BgSmoothingService _smoothingService;
