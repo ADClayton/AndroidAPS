@@ -3,11 +3,12 @@ using System;
 using Android.App;
 using Android.Content;
 using Android.Util;
+using Microsoft.Maui;
 using AndroidAPSMaui.Services;
 
 namespace AndroidAPSMaui.Platforms.Android.Receivers;
 
-[BroadcastReceiver(Enabled = true, Exported = true)]
+[BroadcastReceiver(Enabled = true, Exported = true, DirectBootAware = true)]
 [IntentFilter(new[] { XdripIngestionService.ActionNewBgEstimate, XdripIngestionService.ActionBgEstimateNoData })]
 public class XdripBroadcastReceiver : BroadcastReceiver
 {
@@ -58,7 +59,7 @@ public class XdripBroadcastReceiver : BroadcastReceiver
         var action = intent.Action ?? "<null>";
         Log.Info(Tag, $"XdripBroadcastReceiver invoked for action={action} extras={intent.Extras?.KeySet()?.Count ?? 0}");
 
-        var handler = ServiceResolver.Resolve<XdripIngestionService>();
+        var handler = EnsureHandlerInitialized(context);
         if (handler == null)
         {
             Log.Error(Tag, "XdripBroadcastReceiver could not resolve XdripIngestionService. Confirm MauiProgram registers it and the app is initialized before broadcasts arrive.");
@@ -66,6 +67,28 @@ public class XdripBroadcastReceiver : BroadcastReceiver
         }
 
         handler.HandleIntent(intent);
+    }
+
+    private static XdripIngestionService? EnsureHandlerInitialized(Context context)
+    {
+        var handler = ServiceResolver.Resolve<XdripIngestionService>();
+        if (handler != null)
+        {
+            return handler;
+        }
+
+        if (context.ApplicationContext is MauiApplication mauiApp && mauiApp.Services != null)
+        {
+            ServiceResolver.Initialize(mauiApp.Services);
+            Log.Info(Tag, "ServiceResolver initialized from MauiApplication for background broadcast handling.");
+            handler = ServiceResolver.Resolve<XdripIngestionService>();
+        }
+        else
+        {
+            Log.Warn(Tag, "Unable to obtain MauiApplication services while handling broadcast in background.");
+        }
+
+        return handler;
     }
 }
 #endif
