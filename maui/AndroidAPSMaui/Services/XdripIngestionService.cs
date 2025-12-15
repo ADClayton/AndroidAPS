@@ -18,7 +18,7 @@ public class XdripIngestionService
     private readonly BgSmoothingService _smoothingService;
 
 #if ANDROID
-    private const string Tag = "AAPS.MAUI.BgReceiver";
+    private const string Tag = "XdripBroadcastReceiver";
 #endif
 
     public XdripIngestionService(BgReadingStore bgReadingStore, BgSmoothingService smoothingService)

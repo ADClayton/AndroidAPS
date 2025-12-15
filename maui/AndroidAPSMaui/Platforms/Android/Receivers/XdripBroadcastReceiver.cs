@@ -12,7 +12,7 @@ namespace AndroidAPSMaui.Platforms.Android.Receivers;
 [IntentFilter(new[] { XdripIngestionService.ActionNewBgEstimate, XdripIngestionService.ActionBgEstimateNoData })]
 public class XdripBroadcastReceiver : BroadcastReceiver
 {
-    private const string Tag = "AAPS.MAUI.BgReceiver";
+    private const string Tag = "XdripBroadcastReceiver";
 
     static XdripBroadcastReceiver()
     {
