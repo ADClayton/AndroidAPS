@@ -1,4 +1,5 @@
 #if ANDROID
+using System;
 using Android.App;
 using Android.Content;
 using Android.Util;
@@ -11,6 +12,34 @@ namespace AndroidAPSMaui.Platforms.Android.Receivers;
 public class XdripBroadcastReceiver : BroadcastReceiver
 {
     private const string Tag = "AAPS.MAUI.BgReceiver";
+
+    static XdripBroadcastReceiver()
+    {
+        var receiverAttribute = (BroadcastReceiverAttribute?)Attribute.GetCustomAttribute(
+            typeof(XdripBroadcastReceiver), typeof(BroadcastReceiverAttribute));
+        var intentFilters = (IntentFilterAttribute[])Attribute.GetCustomAttributes(
+            typeof(XdripBroadcastReceiver), typeof(IntentFilterAttribute));
+
+        if (receiverAttribute == null)
+        {
+            Log.Warn(Tag, "XdripBroadcastReceiver loaded without BroadcastReceiverAttribute. Manifest merge may have failed.");
+        }
+        else
+        {
+            Log.Info(Tag,
+                $"XdripBroadcastReceiver registration loaded (Enabled={receiverAttribute.Enabled}, Exported={receiverAttribute.Exported}).");
+        }
+
+        foreach (var filter in intentFilters)
+        {
+            Log.Info(Tag, $"IntentFilter actions: {string.Join(",", filter.Actions ?? Array.Empty<string>())}");
+        }
+    }
+
+    public XdripBroadcastReceiver()
+    {
+        Log.Debug(Tag, "XdripBroadcastReceiver instance constructed; waiting for broadcasts.");
+    }
 
     public override void OnReceive(Context? context, Intent? intent)
     {
