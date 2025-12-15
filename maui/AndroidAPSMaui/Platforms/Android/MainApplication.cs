@@ -1,3 +1,4 @@
+using System;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
@@ -20,10 +21,33 @@ public class MainApplication : MauiApplication
     {
         base.OnCreate();
         Log.Info(MauiLog.Tag, "MainApplication created; MAUI app is initializing with unified logcat tag.");
+        InitializeServicesForBackground();
         LogReceiverRegistration();
     }
 
     protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+    private void InitializeServicesForBackground()
+    {
+        try
+        {
+            var services = Services;
+            if (services != null)
+            {
+                ServiceResolver.Initialize(services);
+                Log.Info(MauiLog.Tag, "Maui services initialized during application startup for background receiver use.");
+            }
+            else
+            {
+                Log.Warn(MauiLog.Tag,
+                    "Maui services unavailable during application startup; background broadcasts may not resolve dependencies until the UI launches.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Error(MauiLog.Tag, $"Failed to initialize services for background receiver: {ex}");
+        }
+    }
 
     private void LogReceiverRegistration()
     {
