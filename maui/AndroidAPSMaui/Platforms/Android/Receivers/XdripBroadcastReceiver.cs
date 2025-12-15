@@ -5,6 +5,7 @@ using Android.Content;
 using Android.Util;
 using Microsoft.Maui;
 using AndroidAPSMaui.Services;
+using AndroidAPSMaui.Logging;
 
 namespace AndroidAPSMaui.Platforms.Android.Receivers;
 
@@ -12,7 +13,6 @@ namespace AndroidAPSMaui.Platforms.Android.Receivers;
 [IntentFilter(new[] { XdripIngestionService.ActionNewBgEstimate, XdripIngestionService.ActionBgEstimateNoData })]
 public class XdripBroadcastReceiver : BroadcastReceiver
 {
-    private const string Tag = "XdripBroadcastReceiver";
 
     static XdripBroadcastReceiver()
     {
@@ -23,46 +23,46 @@ public class XdripBroadcastReceiver : BroadcastReceiver
 
         if (receiverAttribute == null)
         {
-            Log.Warn(Tag, "XdripBroadcastReceiver loaded without BroadcastReceiverAttribute. Manifest merge may have failed.");
+            Log.Warn(MauiLog.Tag, "XdripBroadcastReceiver loaded without BroadcastReceiverAttribute. Manifest merge may have failed.");
         }
         else
         {
-            Log.Info(Tag,
+            Log.Info(MauiLog.Tag,
                 $"XdripBroadcastReceiver registration loaded (Enabled={receiverAttribute.Enabled}, Exported={receiverAttribute.Exported}).");
         }
 
         foreach (var filter in intentFilters)
         {
-            Log.Info(Tag, $"IntentFilter actions: {string.Join(",", filter.Actions ?? Array.Empty<string>())}");
+            Log.Info(MauiLog.Tag, $"IntentFilter actions: {string.Join(",", filter.Actions ?? Array.Empty<string>())}");
         }
     }
 
     public XdripBroadcastReceiver()
     {
-        Log.Debug(Tag, "XdripBroadcastReceiver instance constructed; waiting for broadcasts.");
+        Log.Debug(MauiLog.Tag, "XdripBroadcastReceiver instance constructed; waiting for broadcasts.");
     }
 
     public override void OnReceive(Context? context, Intent? intent)
     {
         if (context == null)
         {
-            Log.Warn(Tag, "XdripBroadcastReceiver triggered with null context. Ensure receiver manifest merge is correct.");
+            Log.Warn(MauiLog.Tag, "XdripBroadcastReceiver triggered with null context. Ensure receiver manifest merge is correct.");
             return;
         }
 
         if (intent == null)
         {
-            Log.Warn(Tag, "XdripBroadcastReceiver received null intent. Sender may not be delivering broadcast correctly.");
+            Log.Warn(MauiLog.Tag, "XdripBroadcastReceiver received null intent. Sender may not be delivering broadcast correctly.");
             return;
         }
 
         var action = intent.Action ?? "<null>";
-        Log.Info(Tag, $"XdripBroadcastReceiver invoked for action={action} extras={intent.Extras?.KeySet()?.Count ?? 0}");
+        Log.Info(MauiLog.Tag, $"XdripBroadcastReceiver invoked for action={action} extras={intent.Extras?.KeySet()?.Count ?? 0}");
 
         var handler = EnsureHandlerInitialized(context);
         if (handler == null)
         {
-            Log.Error(Tag, "XdripBroadcastReceiver could not resolve XdripIngestionService. Confirm MauiProgram registers it and the app is initialized before broadcasts arrive.");
+            Log.Error(MauiLog.Tag, "XdripBroadcastReceiver could not resolve XdripIngestionService. Confirm MauiProgram registers it and the app is initialized before broadcasts arrive.");
             return;
         }
 
@@ -80,12 +80,12 @@ public class XdripBroadcastReceiver : BroadcastReceiver
         if (context.ApplicationContext is MauiApplication mauiApp && mauiApp.Services != null)
         {
             ServiceResolver.Initialize(mauiApp.Services);
-            Log.Info(Tag, "ServiceResolver initialized from MauiApplication for background broadcast handling.");
+            Log.Info(MauiLog.Tag, "ServiceResolver initialized from MauiApplication for background broadcast handling.");
             handler = ServiceResolver.Resolve<XdripIngestionService>();
         }
         else
         {
-            Log.Warn(Tag, "Unable to obtain MauiApplication services while handling broadcast in background.");
+            Log.Warn(MauiLog.Tag, "Unable to obtain MauiApplication services while handling broadcast in background.");
         }
 
         return handler;

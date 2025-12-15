@@ -1,6 +1,8 @@
 using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Util;
+using AndroidAPSMaui.Logging;
 
 namespace AndroidAPSMaui;
 
@@ -10,5 +12,6 @@ public class MainActivity : MauiAppCompatActivity
     protected override void OnCreate(Bundle? savedInstanceState)
     {
         base.OnCreate(savedInstanceState);
+        Log.Info(MauiLog.Tag, "MainActivity created; UI is available for interaction.");
     }
 }

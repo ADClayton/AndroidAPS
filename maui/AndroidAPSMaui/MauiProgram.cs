@@ -1,6 +1,9 @@
+using AndroidAPSMaui.Logging;
 using AndroidAPSMaui.Services;
 using AndroidAPSMaui.Services.Android;
 using AndroidAPSMaui.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace AndroidAPSMaui;
 
@@ -15,6 +18,12 @@ public static class MauiProgram
             {
                 // Add custom fonts here if needed
             });
+
+#if ANDROID
+        builder.Logging.ClearProviders();
+        builder.Logging.AddProvider(new Platforms.Android.Logging.LogcatLoggerProvider(MauiLog.Tag));
+        builder.Logging.SetMinimumLevel(LogLevel.Debug);
+#endif
 
         builder.Services.AddSingleton<ServiceResolver>();
         builder.Services.AddSingleton<BgReadingStore>();
@@ -38,6 +47,12 @@ public static class MauiProgram
 
         var app = builder.Build();
         ServiceResolver.Initialize(app.Services);
+
+#if ANDROID
+        var loggerFactory = app.Services.GetRequiredService<ILoggerFactory>();
+        var logger = loggerFactory.CreateLogger("Startup");
+        logger.LogInformation("MAUI app configured; logcat tag '{Tag}' active at minimum level {Level}.", MauiLog.Tag, LogLevel.Debug);
+#endif
         return app;
     }
 }
