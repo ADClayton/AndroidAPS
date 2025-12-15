@@ -6,4 +6,18 @@
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE" />
+
+    <application>
+        <receiver
+            android:name="AndroidAPSMaui.Platforms.Android.Receivers.XdripBroadcastReceiver"
+            android:directBootAware="true"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="com.eveningoutpost.dexdrip.permissions.RECEIVE_BG_ESTIMATE">
+            <intent-filter>
+                <action android:name="com.eveningoutpost.dexdrip.BgEstimate" />
+                <action android:name="com.eveningoutpost.dexdrip.BgEstimateNoData" />
+            </intent-filter>
+        </receiver>
+    </application>
 </manifest>
