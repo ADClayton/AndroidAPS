@@ -1,0 +1,60 @@
+package app.aaps.di
+
+import app.aaps.MainApp
+import app.aaps.core.objects.di.CoreModule
+import app.aaps.core.validators.di.ValidatorsModule
+import app.aaps.database.di.DatabaseModule
+import app.aaps.database.persistence.di.PersistenceModule
+import app.aaps.implementation.di.ImplementationModule
+import app.aaps.plugins.configuration.di.ConfigurationModule
+import app.aaps.plugins.insulin.di.InsulinModule
+import app.aaps.plugins.main.di.PluginsModule
+import app.aaps.plugins.source.di.SourceModule
+import app.aaps.pump.common.di.PumpCommonModule
+import app.aaps.pump.omnipod.dash.di.OmnipodDashModule
+import app.aaps.shared.impl.di.LoggerModule
+import app.aaps.shared.impl.di.SharedImplModule
+import app.aaps.ui.di.UiModule
+import app.aaps.workflow.di.WorkflowModule
+import dagger.BindsInstance
+import dagger.Component
+import dagger.android.AndroidInjectionModule
+import dagger.android.AndroidInjector
+import javax.inject.Singleton
+
+@Singleton
+@Component(
+    modules = [
+        AndroidInjectionModule::class,
+        AppModule::class,
+        PluginsListModule::class,
+        ActivitiesModule::class,
+        ReceiversModule::class,
+        PersistenceModule::class,
+        ConfigurationModule::class,
+        CoreModule::class,
+        DatabaseModule::class,
+        ImplementationModule::class,
+        InsulinModule::class,
+        PluginsModule::class,
+        SharedImplModule::class,
+        LoggerModule::class,
+        UiModule::class,
+        ValidatorsModule::class,
+        SourceModule::class,
+        WorkflowModule::class,
+        PumpCommonModule::class,
+        OmnipodDashModule::class
+    ]
+)
+interface AppComponent : AndroidInjector<MainApp> {
+
+    @Component.Builder
+    interface Builder {
+
+        @BindsInstance
+        fun application(mainApp: MainApp): Builder
+
+        fun build(): AppComponent
+    }
+}

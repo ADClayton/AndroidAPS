@@ -15,12 +15,14 @@ class ConfigImpl @Inject constructor(
 ) : Config {
 
     override val SUPPORTED_NS_VERSION = 150000 // 15.0.0
+    private val pumpControlApplicationIds = setOf("info.nightscout.aapspumpcontrol", "info.nightscout.aapscutdown")
+
     override val APS = BuildConfig.FLAVOR == "full"
     override val AAPSCLIENT = BuildConfig.FLAVOR == "aapsclient" || BuildConfig.FLAVOR == "aapsclient2"
     override val AAPSCLIENT1 = BuildConfig.FLAVOR == "aapsclient"
     override val AAPSCLIENT2 = BuildConfig.FLAVOR == "aapsclient2"
-    override val PUMPCONTROL = BuildConfig.FLAVOR == "pumpcontrol"
-    override val PUMPDRIVERS = BuildConfig.FLAVOR == "full" || BuildConfig.FLAVOR == "pumpcontrol"
+    override val PUMPCONTROL = BuildConfig.FLAVOR == "pumpcontrol" || BuildConfig.FLAVOR == "cutdown" || pumpControlApplicationIds.contains(BuildConfig.APPLICATION_ID)
+    override val PUMPDRIVERS = BuildConfig.FLAVOR == "full" || PUMPCONTROL
     override val FLAVOR = BuildConfig.FLAVOR
     override val VERSION_NAME = BuildConfig.VERSION_NAME
     override val HEAD = BuildConfig.HEAD

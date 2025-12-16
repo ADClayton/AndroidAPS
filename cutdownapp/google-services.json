@@ -1,0 +1,214 @@
+{
+  "client": [
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.aapsclient"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:56b8fa16651fb8dbfcb29f"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.aapsclient2"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:8e749a9253635bcafcb29f"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.aapspumpcontrol"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:aef229914e3e5448"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.androidaps"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:efc956f55b281623"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.nsclient"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:b38d6e7351f73cc0"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.nsclient2"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:2dc8cf3acd3332e7"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9HRtJJsnk_SbAMAuvudSua2vEm3j3430"
+        }
+      ],
+      "client_info": {
+        "android_client_info": {
+          "package_name": "info.nightscout.aapscutdown"
+        },
+        "mobilesdk_app_id": "1:477603612366:android:aef229914e3e5448"
+      },
+      "oauth_client": [
+        {
+          "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "477603612366-a925drvlvs7qn7gt73r585erbqto8c79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1",
+  "project_info": {
+    "firebase_url": "https://androidaps-c34f8.firebaseio.com",
+    "project_id": "androidaps-c34f8",
+    "project_number": "477603612366",
+    "storage_bucket": "androidaps-c34f8.appspot.com"
+  }
+}
