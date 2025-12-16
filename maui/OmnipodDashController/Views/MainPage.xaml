@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:OmnipodDashController.ViewModels"
+             x:Class="OmnipodDashController.Views.MainPage"
+             x:DataType="viewModels:MainViewModel"
+             Title="Omnipod Dash">
+    <ScrollView>
+        <VerticalStackLayout Padding="24" Spacing="12">
+            <Label Text="Pod unique ID" />
+            <Entry Text="{Binding PodId}" Placeholder="08:1A:AA:BB:CC:DD" />
+
+            <Label Text="Pairing PIN (optional)" />
+            <Entry Text="{Binding PairingPin}" Keyboard="Numeric" Placeholder="0000" />
+
+            <Label Text="Basal program" />
+            <Entry Text="{Binding BasalProgram}" Placeholder="JSON basal program" />
+
+            <Button Text="Connect" Command="{Binding ConnectCommand}" />
+            <Button Text="Refresh Status" Command="{Binding StatusCommand}" />
+            <Button Text="Suspend Delivery" Command="{Binding SuspendCommand}" />
+
+            <Label Text="Event log" FontAttributes="Bold" />
+            <CollectionView ItemsSource="{Binding Events}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding}" LineBreakMode="WordWrap" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
